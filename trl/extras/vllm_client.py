@@ -140,6 +140,7 @@ class VLLMClient:
         min_p: float = 0.0,
         max_tokens: int = 16,
         guided_decoding_regex: Optional[str] = None,
+        stop: Optional[list[str]] = None,
     ) -> list[list[str]]:
         """
         Generates model completions for the provided prompts.
@@ -181,6 +182,7 @@ class VLLMClient:
                 "min_p": min_p,
                 "max_tokens": max_tokens,
                 "guided_decoding_regex": guided_decoding_regex,
+                "stop": stop,
             },
         )
         if response.status_code == 200:
