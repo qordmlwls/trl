@@ -214,7 +214,9 @@ class VLLMClient:
 
         # Set up the communication group for weight broadcasting
         pg = StatelessProcessGroup.create(host=self.host, port=self.group_port, rank=self.rank, world_size=world_size)
-        self.pynccl_comm = PyNcclCommunicator(pg, device="cuda:0")
+        current = torch.cuda.current_device()
+        self.pynccl_comm = PyNcclCommunicator(pg, device=f"cuda:{current}")
+        # self.pynccl_comm = PyNcclCommunicator(pg, device="cuda:0")
 
     def update_named_param(self, name: str, weights: torch.Tensor):
         """
